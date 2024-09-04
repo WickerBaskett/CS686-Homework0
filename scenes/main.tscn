@@ -1,0 +1,87 @@
+[gd_scene load_steps=9 format=3 uid="uid://cpjyndeura8kn"]
+
+[ext_resource type="PackedScene" uid="uid://bhqq0e5ebparg" path="res://scenes/player.tscn" id="1_rn8a6"]
+[ext_resource type="PackedScene" uid="uid://dyqex8x0koynw" path="res://scenes/cube.tscn" id="3_us0t7"]
+[ext_resource type="PackedScene" uid="uid://cljjm7a1ssa8s" path="res://scenes/hoop.tscn" id="4_3h2t5"]
+[ext_resource type="PackedScene" uid="uid://c00bvuusosido" path="res://scenes/ocean.tscn" id="4_fnmyp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0x6si"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_k1d0k"]
+material = SubResource("StandardMaterial3D_0x6si")
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rpdes"]
+size = Vector3(1.99945, 0.0100403, 2.00635)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_gewmk"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_rn8a6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14334, 0)
+
+[node name="Cube" parent="." instance=ExtResource("3_us0t7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.30596, 1.04176, 4.13632)
+linear_damp = 1.295
+
+[node name="WorldBorders" type="Node3D" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="WorldBorders"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldBorders/Ground"]
+transform = Transform3D(10.74, 0, 0, 0, 10.74, 0, 0, 0, 10.74, 1.19482, -0.0376081, 1.36462)
+mesh = SubResource("PlaneMesh_k1d0k")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBorders/Ground"]
+transform = Transform3D(10.74, 0, 0, 0, 10.74, 0, 0, 0, 10.74, 1.16626, -0.0785146, 1.34512)
+shape = SubResource("BoxShape3D_rpdes")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.41711, 0)
+light_energy = 16.0
+light_indirect_energy = 16.0
+omni_range = 4096.0
+omni_shadow_mode = 0
+
+[node name="hoop" parent="." instance=ExtResource("4_3h2t5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.09514, 4.21275, 0)
+
+[node name="Shader things!" type="Node" parent="."]
+
+[node name="Ocean" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35744, -11.8271, 0.0546856)
+
+[node name="Ocean2" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.5182, -11.8271, 0.0546856)
+
+[node name="Ocean3" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.5182, -11.8271, 82.2451)
+
+[node name="Ocean4" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.28, -11.8271, 82.2451)
+
+[node name="Ocean5" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.4802, -11.8271, 82.2451)
+
+[node name="Ocean6" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.4802, -11.8271, -5.37026)
+
+[node name="Ocean7" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.4802, -11.8271, -97.2405)
+
+[node name="Ocean8" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8438, -11.8271, -97.2405)
+
+[node name="Ocean9" parent="Shader things!" instance=ExtResource("4_fnmyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.0406, -11.8304, -97.2423)
+
+[node name="Area3D" type="Area3D" parent="Shader things!"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shader things!/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.51755, 0)
+shape = SubResource("WorldBoundaryShape3D_gewmk")
+
+[connection signal="body_entered" from="Shader things!/Area3D" to="Player" method="_on_area_3d_body_entered"]

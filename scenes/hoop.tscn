@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cljjm7a1ssa8s"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_wog8o"]
+inner_radius = 2.8
+outer_radius = 3.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0rr6r"]
+emission_enabled = true
+emission = Color(0.551536, 0.431754, 0.826798, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ky24n"]
+height = 0.0352046
+radius = 0.524566
+
+[node name="hoop" type="Area3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("TorusMesh_wog8o")
+surface_material_override/0 = SubResource("StandardMaterial3D_0rr6r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-2.35695e-07, -5.39208, 0, 5.39208, -2.35695e-07, 0, 0, 0, 5.39208, 0, 0, 0)
+shape = SubResource("CylinderShape3D_ky24n")
